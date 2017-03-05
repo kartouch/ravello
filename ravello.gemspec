@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = "ravello"
   spec.version       = Ravello::VERSION
   spec.authors       = ["Christophe Augello"]
-  spec.email         = ["caugello@redhat.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.email         = ["christope@augello.be"]
+  spec.summary       = %q{Ruby wrapper for Ravello API.}
+  spec.description   = %q{Ruby wrapper for Ravello API.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -20,4 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
+  spec.add_dependency 'httparty'
+
 end

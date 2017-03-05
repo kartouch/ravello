@@ -1,11 +1,12 @@
-require "ravello/version"
-require 'ravello/auth'
-require 'ravello/applications'
-require 'ravello/blueprints'
-require 'ravello/images'
-require 'ravello/disk_images'
+require_relative "ravello/version"
+require_relative 'ravello/auth'
+require_relative 'ravello/applications'
+require_relative 'ravello/blueprints'
+require_relative 'ravello/images'
+require_relative 'ravello/disk_images'
 
 module Ravello
+  
   include Auth
   include Applications
   include Blueprints
