@@ -37,8 +37,8 @@ module Ravello
       action: "#{self.to_s.module_name}/:id/:action",
       single_vm_action: "#{self.to_s.module_name}/:id/vms/:vmId/:action",
       multiple_vms_action: "#{self.to_s.module_name}/:id/vms/:action",
-      expiration_time: "#{self.to_s.module_name}/:id/setExpiration",
-      charges: "#{self.to_s.module_name}/:id;:view/calcPrice",
+      set_expiration: "#{self.to_s.module_name}/:id/setExpiration",
+      calc_price: "#{self.to_s.module_name}/:id;:view/calcPrice",
       add_vm: "#{self.to_s.module_name}/:id/vms",
       create_documentation: "#{self.to_s.module_name}/:id/documentation"
     }
@@ -66,8 +66,7 @@ module Ravello
 
     post_endpoints.each do |meth,ep|
       define_method(meth.to_sym) do |*args|
-
-        puts formated_ep(ep,args)
+        Api.post(formated_ep(ep,args),args.first[:body])
       end
     end
 
