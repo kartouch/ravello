@@ -2,6 +2,11 @@
 
 TODO: Write a gem description
 
+id
+view
+action
+
+
 ## Installation
 
 Add this line to your application's Gemfile:

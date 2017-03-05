@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 0'
   spec.add_runtime_dependency 'httparty', '~> 0.14', '>= 0.14.0'
 
+
 end

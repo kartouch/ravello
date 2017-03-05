@@ -1,68 +1,76 @@
-require_relative '../application'
+require_relative '../shared/string'
+require_relative '../application/application'
+require_relative '../shared/api'
 require 'httparty'
+
 module Ravello
   module Applications
     extend self
 
-      def all
-        HTTParty.get(BASE_URI + '/applications',
-        headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"})
-      end
-
-      def show(id,opt=nil)
-        if opt.nil?
-          resp = HTTParty.get(BASE_URI + "/applications/#{id}",headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"})
-          @application = Application.new(resp)
-        else
-          resp = HTTParty.get(BASE_URI + "/applications/#{id};#{opt}",headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"})
-          @application = Application.new(resp)
+    def formated_ep(ep,args)
+      str = ep
+      args.each do |arg|
+        arg.each do |k,v|
+          str =  str.gsub(":#{k}",v.to_s)
         end
       end
+      str = str.gsub(/;:\w{1,8}/,'')
+      return str
+    end
 
-      def action(id,action)
-        HTTParty.post(BASE_URI + "/applications/#{id}/#{action}",
-        headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"})
-      end
+    get_endpoints = {
+      show: "#{self.to_s.module_name}/:id;:view",
+      vms: "#{self.to_s.module_name}/:id;:view/vms",
+      vm: "#{self.to_s.module_name}/:id;:view/vms/:vmId",
+      publish_locations: "#{self.to_s.module_name}/:id/publishLocations",
+      vnc_url: "#{self.to_s.module_name}/:id/vms/:vmId/vncUrl",
+      fqdn: "#{self.to_s.module_name}/:id/vms/:vmId/fqdn;deployment",
+      cloud_state: "#{self.to_s.module_name}/:id/vms/:vmId/state;deployment",
+      public_ips: "#{self.to_s.module_name}/:id/vms/:vmId/publicIps;deployment",
+      published?: "#{self.to_s.module_name}/:id/isPublished",
+      get_documentation: "#{self.to_s.module_name}/:id/documentation",
+    }
 
-      def vms(id)
-        HTTParty.get(BASE_URI + "/applications/#{id}/vms",
-        headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"})
-      end
+    post_endpoints = {
+      create: self.to_s.module_name,
+      publish: "#{self.to_s.module_name}/:id/publish",
+      action: "#{self.to_s.module_name}/:id/:action",
+      single_vm_action: "#{self.to_s.module_name}/:id/vms/:vmId/:action",
+      multiple_vms_action: "#{self.to_s.module_name}/:id/vms/:action",
+      expiration_time: "#{self.to_s.module_name}/:id/setExpiration",
+      charges: "#{self.to_s.module_name}/:id;:view/calcPrice",
+      add_vm: "#{self.to_s.module_name}/:id/vms",
+      create_documentation: "#{self.to_s.module_name}/:id/documentation"
+    }
 
-      def public_ip(id,vm)
-        HTTParty.get(BASE_URI + "/applications/#{id}/vms/#{vm}/publicIps;deployment",
-        headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"})
-      end
+    put_enpoints = {
+      update: "#{self.to_s.module_name}/:id",
+      update_vm: "#{self.to_s.module_name}/:id/vms/:vmId",
+      update_documentation: "#{self.to_s.module_name}/:id/documentation",
+    }
 
-      def set_expiration_time(id,time)
-        HTTParty.post(BASE_URI + "/applications/#{id}/setExpiration",
-        headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"},
-        body: time.to_json)
-      end
+    delete_endpoints = {
+      delete: "#{self.to_s.module_name}/:id",
+      delete_documentation: "#{self.to_s.module_name}/:id/documentation",
+    }
 
-      def create(body)
-          HTTParty.post(BASE_URI + '/applications',
-          headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"},
-          body: body)
-      end
+    def all
+      Api.get(self.to_s.module_name).map{ |app| Application.new(app) }
+    end
 
-      def update(id,body)
-          HTTParty.put(BASE_URI + "/applications/#{id}",
-          headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"},
-          body: body)
+    get_endpoints.each do |meth,ep|
+      define_method(meth.to_sym) do |*args|
+        Application.new(Api.get(formated_ep(ep,args)))
       end
+    end
 
-      def publish(id,preferences)
-        HTTParty.post(BASE_URI + "/applications/#{id}/publish",
-        headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"},
-        body: preferences)
-      end
+    post_endpoints.each do |meth,ep|
+      define_method(meth.to_sym) do |*args|
 
-      def vnc_url(id,vm)
-         url = URI(BASE_URI + "/applications/#{id}/vms/#{vm}/vncUrl")
-         cmd = system("curl --user #{ENV['RAVELLO_USER']}:#{ENV['RAVELLO_PWD']} #{url}")
-         return cmd
+        puts formated_ep(ep,args)
       end
+    end
+
 
   end
 end
