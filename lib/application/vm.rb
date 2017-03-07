@@ -1,6 +1,6 @@
 require_relative 'hard_drives'
 
-class Vm
+class Vm 
   @@attributes = [:name, :description, :creation_time, :memory_size, :num_cpus, :platform, :os,
                 :supports_cloud_init, :user_data, :requires_key_pair, :key_pair_id, :hostnames, :application_id,
                 :legacy_mode , :loading_status, :loading_percentage, :base_vm_id, :bios_uuid, :cpu_ids, :boot_order,

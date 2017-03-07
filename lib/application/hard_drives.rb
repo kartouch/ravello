@@ -1,6 +1,7 @@
 require 'ostruct'
+
 class HardDrives
-  
+
   @@attributes = [:id, :name, :boot, :size, :index, :type, :controller,
                 :base_disk_image_id, :base_disk_image_name, :controller_index, :controller_pci_slot, :loading_status, :loading_percentage]
 

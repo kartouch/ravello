@@ -1,8 +1,9 @@
 require_relative 'deployment'
+require_relative '../shared/string'
 
 class Application
 
-@@attributes = [:id, :name, :description, :base_blueprint_id, :base_blueprint_name, :design_differs_from_deployment, :published, :creation_time, :version,
+@@attributes = [:id, :name, :description, :base_blueprint_id, :blueprint_name, :design_differs_from_deployment, :published, :creation_time, :version,
               :next_stop_task, :design, :deployment]
 
 @@attributes.each {|attr| attr_accessor attr}

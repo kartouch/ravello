@@ -1,0 +1,384 @@
+{
+    "baseBlueprintId": 78415234,
+    "blueprintName": "caugello-summit2017-002-v4",
+    "costBucket": {
+        "creationTime": 1456038573119,
+        "deleted": false,
+        "id": 49381386,
+        "name": "Organization"
+    },
+    "costBucketId": 49381386,
+    "creationTime": 1488821499787,
+    "deployment": {
+        "cloud": "Oracle Ravello Cloud",
+        "cloudId": "oracle-ravello-cloud",
+        "cloudRegion": {
+            "cloud": {
+                "displayName": "Oracle Ravello Cloud",
+                "name": "oracle-ravello-cloud"
+            },
+            "deprecated": false,
+            "displayName": "US Central 1",
+            "name": "us-central-1"
+        },
+        "network": {
+            "dnsService": {
+                "host": [
+                    {
+                        "index": 0,
+                        "ip": "10.0.2.10",
+                        "name": "instructor.example.com"
+                    }
+                ],
+                "id": 3639390077406225408
+            },
+            "routerLegs": [
+                {
+                    "id": 2366698123091279872,
+                    "ip": "10.0.2.1",
+                    "routerRef": 5748368697913192448,
+                    "subnetRef": 5968523822420996096
+                }
+            ],
+            "routers": [
+                {
+                    "id": 5748368697913192448,
+                    "isExternal": true
+                }
+            ],
+            "subnets": [
+                {
+                    "dhcp": {
+                        "active": false,
+                        "id": 5213129838583844864,
+                        "ip": "10.0.2.1",
+                        "ipRangeBegin": "10.0.2.1",
+                        "ipRangeEnd": "10.0.2.254"
+                    },
+                    "id": 5968523822420996096,
+                    "ip": "10.0.2.0",
+                    "mask": "255.255.255.0",
+                    "networkConnectionRefs": [
+                        635123572385050752
+                    ]
+                }
+            ]
+        },
+        "networkFilter": {
+            "accessAllowedByDefault": false,
+            "blockOutgoingTraffic": false,
+            "filteringEnabled": false
+        },
+        "publishOptimization": "COST_OPTIMIZED",
+        "publishStartTime": 1488821514699,
+        "regionId": "us-central-1",
+        "regionName": "US Central 1",
+        "stopVmsByOrder": false,
+        "totalActiveVms": 1,
+        "totalErrorVms": 0,
+        "vms": [
+            {
+                "allowNested": false,
+                "applicationId": 79332353,
+                "baseVmId": 0,
+                "bootOrder": [
+                    "CDROM",
+                    "DISK"
+                ],
+                "configNetworkUsingCloudInit": true,
+                "configurationManagement": {
+                    "configNetworkUsingCloudInit": true,
+                    "userData": "#!/bin/bash\ncat << EOF > /etc/sysconfig/network-scripts/ifcfg-ens3\nTYPE=\"Ethernet\"\nBOOTPROTO=\"static\"\nDEFROUTE=\"yes\"\nPEERDNS=\"yes\"\nPEERROUTES=\"yes\"\nIPV4_FAILURE_FATAL=\"no\"\nIPV6INIT=\"yes\"\nIPV6_AUTOCONF=\"yes\"\nIPV6_DEFROUTE=\"yes\"\nIPV6_PEERROUTES=\"yes\"\nIPV6_FAILURE_FATAL=\"no\"\nNAME=\"ens3\"\nDEVICE=\"ens3\"\nONBOOT=\"yes\"\nIPADDR=10.0.2.10\nNETMASK=255.255.255.0\nDNS1=8.8.8.8\nGATEWAY=10.0.2.1\nEOF\nsystemctl restart network\nsed -i 's|#PasswordAuthentication yes|PasswordAuthentication yes|g' /etc/ssh/sshd_config\n# Add this for ansible to work with cloud-user and user/passwd setup\nsystemctl restart sshd\necho '--- Remove cloud-init and reboot'\nyum remove -y cloud-init ; reboot\n"
+                },
+                "creationTime": 1488821514699,
+                "externalFqdn": "instructorexamplec-caugellotestxxx-1umx9vwn.srv.ravcloud.com",
+                "firstTimePublished": "1488821514699",
+                "hardDrives": [
+                    {
+                        "baseDiskImageId": 74776621,
+                        "baseDiskImageName": "rhel-7-cloud-init-sshpass.qcow2",
+                        "boot": true,
+                        "controller": "virtio",
+                        "controllerIndex": 0,
+                        "controllerPciSlot": 0,
+                        "id": 7569791663740340224,
+                        "imageFetchMode": "LAZY",
+                        "index": 0,
+                        "loadingPercentage": 100,
+                        "loadingStatus": "DONE",
+                        "size": {
+                            "unit": "GB",
+                            "value": 15
+                        },
+                        "type": "DISK"
+                    }
+                ],
+                "hostnames": [
+                    "instructor.example.com"
+                ],
+                "id": 2038081066755688448,
+                "legacyMode": false,
+                "loadingPercentage": 100,
+                "loadingStatus": "DONE",
+                "memorySize": {
+                    "unit": "GB",
+                    "value": 2
+                },
+                "monitorState": "OK",
+                "name": "instructor.example.com",
+                "networkConnections": [
+                    {
+                        "accessPort": true,
+                        "device": {
+                            "deviceType": "e1000",
+                            "generatedMac": "2c:c2:60:4c:93:c9",
+                            "index": 0,
+                            "mac": "2c:c2:60:4c:93:c9",
+                            "useAutomaticMac": true
+                        },
+                        "id": 3674887389152945152,
+                        "ipConfig": {
+                            "externalAccessState": "ALWAYS_PORT_FORWARDING",
+                            "fqdn": "instructorexamplec-caugellotestxxx-1umx9vwn.srv.ravcloud.com",
+                            "hasPublicIp": false,
+                            "id": 635123572385050752,
+                            "needElasticIp": false,
+                            "publicIp": "104.154.116.211",
+                            "staticIpConfig": {
+                                "dns": "8.8.8.8",
+                                "gateway": "10.0.2.1",
+                                "ip": "10.0.2.10",
+                                "mask": "255.255.255.0"
+                            }
+                        },
+                        "mirror": false,
+                        "vlanTag": "1"
+                    }
+                ],
+                "numCpus": 1,
+                "os": "default",
+                "platform": "default",
+                "powerOffOnStopTimeOut": true,
+                "privateCloudImage": false,
+                "rcu": 1.0,
+                "requiresHvm": false,
+                "requiresKeypair": false,
+                "state": "STARTED",
+                "suppliedServices": [
+                    {
+                        "external": true,
+                        "externalPort": "10001",
+                        "id": 1367941777554760704,
+                        "ip": "10.0.2.10",
+                        "ipConfigLuid": 635123572385050752,
+                        "name": "ssh",
+                        "portRange": "22",
+                        "protocol": "TCP",
+                        "useLuidForIpConfig": true
+                    }
+                ],
+                "supportsCloudInit": true,
+                "useCdn": false,
+                "userData": "#!/bin/bash\ncat << EOF > /etc/sysconfig/network-scripts/ifcfg-ens3\nTYPE=\"Ethernet\"\nBOOTPROTO=\"static\"\nDEFROUTE=\"yes\"\nPEERDNS=\"yes\"\nPEERROUTES=\"yes\"\nIPV4_FAILURE_FATAL=\"no\"\nIPV6INIT=\"yes\"\nIPV6_AUTOCONF=\"yes\"\nIPV6_DEFROUTE=\"yes\"\nIPV6_PEERROUTES=\"yes\"\nIPV6_FAILURE_FATAL=\"no\"\nNAME=\"ens3\"\nDEVICE=\"ens3\"\nONBOOT=\"yes\"\nIPADDR=10.0.2.10\nNETMASK=255.255.255.0\nDNS1=8.8.8.8\nGATEWAY=10.0.2.1\nEOF\nsystemctl restart network\nsed -i 's|#PasswordAuthentication yes|PasswordAuthentication yes|g' /etc/ssh/sshd_config\n# Add this for ansible to work with cloud-user and user/passwd setup\nsystemctl restart sshd\necho '--- Remove cloud-init and reboot'\nyum remove -y cloud-init ; reboot\n"
+            }
+        ]
+    },
+    "description": "BreakFix challenge",
+    "design": {
+        "layout": {
+            "vmLayoutItem": [
+                {
+                    "location": {
+                        "x": 100,
+                        "y": 350
+                    },
+                    "vmId": 2038081066755688448
+                }
+            ]
+        },
+        "network": {
+            "dnsService": {
+                "entries": [
+                    {
+                        "index": 1000000,
+                        "ip": "10.0.2.10",
+                        "name": "instructorexamplec",
+                        "type": "A"
+                    },
+                    {
+                        "index": 1000001,
+                        "ip": "10.0.2.10",
+                        "name": "instructorexamplec-caugellotestxxx-1umx9vwn.srv.ravcloud.com",
+                        "type": "A"
+                    },
+                    {
+                        "index": 0,
+                        "ip": "10.0.2.10",
+                        "name": "instructor.example.com",
+                        "type": "PTR"
+                    }
+                ],
+                "host": [
+                    {
+                        "index": 0,
+                        "ip": "10.0.2.10",
+                        "name": "instructor.example.com"
+                    }
+                ],
+                "id": 3639390077406225408
+            },
+            "routerLegs": [
+                {
+                    "id": 2366698123091279872,
+                    "ip": "10.0.2.1",
+                    "routerRef": 5748368697913192448,
+                    "subnetRef": 5968523822420996096
+                }
+            ],
+            "routers": [
+                {
+                    "id": 5748368697913192448,
+                    "isExternal": true
+                }
+            ],
+            "subnets": [
+                {
+                    "dhcp": {
+                        "active": false,
+                        "id": 5213129838583844864,
+                        "ip": "10.0.2.1",
+                        "ipRangeBegin": "10.0.2.1",
+                        "ipRangeEnd": "10.0.2.254"
+                    },
+                    "id": 5968523822420996096,
+                    "ip": "10.0.2.0",
+                    "mask": "255.255.255.0",
+                    "networkConnectionRefs": [
+                        635123572385050752
+                    ]
+                }
+            ]
+        },
+        "networkFilter": {
+            "accessAllowedByDefault": false,
+            "blockOutgoingTraffic": false,
+            "filteringEnabled": false
+        },
+        "stopVmsByOrder": false,
+        "vms": [
+            {
+                "allowNested": false,
+                "applicationId": 79332353,
+                "baseVmId": 0,
+                "bootOrder": [
+                    "CDROM",
+                    "DISK"
+                ],
+                "configNetworkUsingCloudInit": true,
+                "configurationManagement": {
+                    "configNetworkUsingCloudInit": true,
+                    "userData": "#!/bin/bash\ncat << EOF > /etc/sysconfig/network-scripts/ifcfg-ens3\nTYPE=\"Ethernet\"\nBOOTPROTO=\"static\"\nDEFROUTE=\"yes\"\nPEERDNS=\"yes\"\nPEERROUTES=\"yes\"\nIPV4_FAILURE_FATAL=\"no\"\nIPV6INIT=\"yes\"\nIPV6_AUTOCONF=\"yes\"\nIPV6_DEFROUTE=\"yes\"\nIPV6_PEERROUTES=\"yes\"\nIPV6_FAILURE_FATAL=\"no\"\nNAME=\"ens3\"\nDEVICE=\"ens3\"\nONBOOT=\"yes\"\nIPADDR=10.0.2.10\nNETMASK=255.255.255.0\nDNS1=8.8.8.8\nGATEWAY=10.0.2.1\nEOF\nsystemctl restart network\nsed -i 's|#PasswordAuthentication yes|PasswordAuthentication yes|g' /etc/ssh/sshd_config\n# Add this for ansible to work with cloud-user and user/passwd setup\nsystemctl restart sshd\necho '--- Remove cloud-init and reboot'\nyum remove -y cloud-init ; reboot\n"
+                },
+                "creationTime": 1488821499788,
+                "hardDrives": [
+                    {
+                        "baseDiskImageId": 74776621,
+                        "baseDiskImageName": "rhel-7-cloud-init-sshpass.qcow2",
+                        "boot": true,
+                        "controller": "virtio",
+                        "controllerIndex": 0,
+                        "controllerPciSlot": 0,
+                        "id": 7569791663740340224,
+                        "imageFetchMode": "LAZY",
+                        "index": 0,
+                        "loadingPercentage": 100,
+                        "loadingStatus": "DONE",
+                        "size": {
+                            "unit": "GB",
+                            "value": 15
+                        },
+                        "type": "DISK"
+                    }
+                ],
+                "hostnames": [
+                    "instructor.example.com"
+                ],
+                "id": 2038081066755688448,
+                "legacyMode": false,
+                "loadingPercentage": 100,
+                "loadingStatus": "DONE",
+                "memorySize": {
+                    "unit": "GB",
+                    "value": 2
+                },
+                "name": "instructor.example.com",
+                "networkConnections": [
+                    {
+                        "accessPort": true,
+                        "device": {
+                            "deviceType": "e1000",
+                            "generatedMac": "2c:c2:60:4c:93:c9",
+                            "index": 0,
+                            "mac": "2c:c2:60:4c:93:c9",
+                            "useAutomaticMac": true
+                        },
+                        "id": 3674887389152945152,
+                        "ipConfig": {
+                            "externalAccessState": "ALWAYS_PORT_FORWARDING",
+                            "fqdn": "instructorexamplec-caugellotestxxx-1umx9vwn.srv.ravcloud.com",
+                            "hasPublicIp": false,
+                            "id": 635123572385050752,
+                            "needElasticIp": false,
+                            "staticIpConfig": {
+                                "dns": "8.8.8.8",
+                                "gateway": "10.0.2.1",
+                                "ip": "10.0.2.10",
+                                "mask": "255.255.255.0"
+                            }
+                        },
+                        "mirror": false,
+                        "vlanTag": "1"
+                    }
+                ],
+                "numCpus": 1,
+                "os": "default",
+                "platform": "default",
+                "powerOffOnStopTimeOut": true,
+                "privateCloudImage": false,
+                "rcu": 1.0,
+                "requiresHvm": false,
+                "requiresKeypair": false,
+                "suppliedServices": [
+                    {
+                        "external": true,
+                        "id": 1367941777554760704,
+                        "ip": "10.0.2.10",
+                        "ipConfigLuid": 635123572385050752,
+                        "name": "ssh",
+                        "portRange": "22",
+                        "protocol": "TCP",
+                        "useLuidForIpConfig": true
+                    }
+                ],
+                "supportsCloudInit": true,
+                "useCdn": false,
+                "userData": "#!/bin/bash\ncat << EOF > /etc/sysconfig/network-scripts/ifcfg-ens3\nTYPE=\"Ethernet\"\nBOOTPROTO=\"static\"\nDEFROUTE=\"yes\"\nPEERDNS=\"yes\"\nPEERROUTES=\"yes\"\nIPV4_FAILURE_FATAL=\"no\"\nIPV6INIT=\"yes\"\nIPV6_AUTOCONF=\"yes\"\nIPV6_DEFROUTE=\"yes\"\nIPV6_PEERROUTES=\"yes\"\nIPV6_FAILURE_FATAL=\"no\"\nNAME=\"ens3\"\nDEVICE=\"ens3\"\nONBOOT=\"yes\"\nIPADDR=10.0.2.10\nNETMASK=255.255.255.0\nDNS1=8.8.8.8\nGATEWAY=10.0.2.1\nEOF\nsystemctl restart network\nsed -i 's|#PasswordAuthentication yes|PasswordAuthentication yes|g' /etc/ssh/sshd_config\n# Add this for ansible to work with cloud-user and user/passwd setup\nsystemctl restart sshd\necho '--- Remove cloud-init and reboot'\nyum remove -y cloud-init ; reboot\n"
+            }
+        ]
+    },
+    "designDiffersFromDeployment": false,
+    "id": 79332353,
+    "name": "caugello-test-xxx",
+    "nextStopTask": {
+        "id": 23331907,
+        "time": 1488828660000
+    },
+    "owner": "Christophe Augello",
+    "ownerDetails": {
+        "deleted": false,
+        "name": "Christophe Augello",
+        "userId": 70189246
+    },
+    "published": true,
+    "version": 2
+}
