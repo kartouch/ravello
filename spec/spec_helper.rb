@@ -1,3 +1,4 @@
+require_relative '../lib/ravello'
 Dir[File.dirname(__FILE__).gsub('spec','lib/*/*')].each {|file| require file }
 
 module Helpers

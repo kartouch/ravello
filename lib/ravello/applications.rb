@@ -18,8 +18,8 @@ module Ravello
       return str
     end
 
-    get_endpoints = {
-      show: "#{self.to_s.module_name}/:id;:view",
+    def get_endpoints
+     {  show: "#{self.to_s.module_name}/:id;:view",
       vms: "#{self.to_s.module_name}/:id;:view/vms",
       vm: "#{self.to_s.module_name}/:id;:view/vms/:vmId",
       publish_locations: "#{self.to_s.module_name}/:id/publishLocations",
@@ -30,9 +30,10 @@ module Ravello
       published?: "#{self.to_s.module_name}/:id/isPublished",
       get_documentation: "#{self.to_s.module_name}/:id/documentation",
     }
+    end
 
-    post_endpoints = {
-      create: self.to_s.module_name,
+    def post_endpoints
+    { create: self.to_s.module_name,
       publish: "#{self.to_s.module_name}/:id/publish",
       action: "#{self.to_s.module_name}/:id/:action",
       single_vm_action: "#{self.to_s.module_name}/:id/vms/:vmId/:action",
@@ -42,17 +43,21 @@ module Ravello
       add_vm: "#{self.to_s.module_name}/:id/vms",
       create_documentation: "#{self.to_s.module_name}/:id/documentation"
     }
+    end
 
-    put_enpoints = {
-      update: "#{self.to_s.module_name}/:id",
-      update_vm: "#{self.to_s.module_name}/:id/vms/:vmId",
-      update_documentation: "#{self.to_s.module_name}/:id/documentation",
-    }
+    def put_endpoints
+      { update: "#{self.to_s.module_name}/:id",
+        update_vm: "#{self.to_s.module_name}/:id/vms/:vmId",
+        update_documentation: "#{self.to_s.module_name}/:id/documentation"
+      }
+    end
 
-    delete_endpoints = {
+    def delete_endpoints
+    {
       delete: "#{self.to_s.module_name}/:id",
       delete_documentation: "#{self.to_s.module_name}/:id/documentation",
     }
+    end
 
     def all
       Api.get(self.to_s.module_name).map{ |app| Application.new(app) }
