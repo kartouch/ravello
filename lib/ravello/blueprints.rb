@@ -1,20 +1,24 @@
-module Ravello
-  module Blueprints
-  extend self
-    def all
-      HTTParty.get(BASE_URI + '/blueprints',
-      headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"})
-    end
-
-    def show(id)
-      HTTParty.get(BASE_URI + "/blueprints/#{id}",
-      headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"})
-    end
-
-    def create(id,name,offline,desc="")
-        HTTParty.post(BASE_URI + '/blueprints',
-        headers: {"Authorization" => Ravello::Auth.base64 ,"Accept" => "application/json", "Content-Type" =>"application/json"},
-        body: {applicationId: id, blueprintName: name, offline: offline, description: desc}.to_json)
-    end
+module Ravello::Blueprints
+  module_function
+  def get_endpoints
+    {
+      all: self.to_s.module_name,
+      private: "organizations/:id/#{self.to_s.module_name}",
+      show: "#{self.to_s.module_name}/:id",
+    }.merge!(Ravello::Common.get_endpoints(self.to_s.module_name))
   end
+
+  def post_endpoints
+    {}.merge!(Ravello::Common.post_endpoints(self.to_s.module_name))
+  end
+
+  def put_endpoints
+    {}.merge!(Ravello::Common.put_endpoints(self.to_s.module_name))
+  end
+
+  def delete_endpoints
+    {}.merge!(Ravello::Common.delete_endpoints(self.to_s.module_name))
+  end
+
+
 end

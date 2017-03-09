@@ -9,6 +9,18 @@ module Helpers
   def application
     Application.new(json_response)
   end
+
+  def formated_url(url)
+    url.gsub(':id',79332353.to_s)
+       .gsub(':vmId', 2038081066755688448.to_s)
+       .gsub(':view', 'deployment')
+       .gsub(':action','start')
+  end
+
+  def regex(endpoint)
+    return /#{endpoint}($|\/\d{8,20}($|(;|\/)\w{1,25}(|\/)($|((\d{1,25}|\w{1,25})|(\d{1,25}|\w{1,25}))\/\w{1,25})($|;\w{1,25})))/
+  end
+
 end
 
 RSpec.configure do |config|
